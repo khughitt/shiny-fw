@@ -39,3 +39,43 @@ Genes:
         - gdsc1000_auc_recomputed_maxabs_spearman
     exclude: []
     filters: []
+Pathways:
+  Combined:
+    path: '/data/nih/fw/0.1/weights/combined/genes/combined_weights_spearman_maxabs.tsv.gz'
+    scores:
+      - mean_score
+      - max_score
+    exclude: []
+    filters: []
+  MM20:
+    path: '/data/nih/archive/gene-weights/mm/2019-10-24/combined/gene_weights.csv'
+    scores:
+        - score
+    exclude:
+        - num_missing
+    filters:
+        - num_measurements
+  CCLE:
+    path: '/data/nih/fw/0.1/weights/individual/ccle2013/genes/rna/auc_published.tsv.gz'
+    scores:
+      - ccle2013_auc_published_max_pearson
+      - ccle2013_auc_published_mean_pearson
+      - ccle2013_auc_published_maxabs_pearson
+      - ccle2013_auc_published_max_spearman
+      - ccle2013_auc_published_mean_spearman
+      - ccle2013_auc_published_maxabs_spearman
+    exclude: []
+    filters: []
+  GDSC:
+    path: '/data/nih/fw/0.1/weights/individual/gdsc1000/genes/rna/auc_recomputed.tsv.gz'
+    scores:
+        - gdsc1000_auc_recomputed_max_pearson
+        - gdsc1000_auc_recomputed_mean_pearson
+        - gdsc1000_auc_recomputed_maxabs_pearson
+        - gdsc1000_auc_recomputed_max_spearman
+        - gdsc1000_auc_recomputed_mean_spearman
+        - gdsc1000_auc_recomputed_maxabs_spearman
+    exclude: []
+    filters: []
+
+

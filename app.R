@@ -50,13 +50,18 @@ server <- function(input, output) {
   })
 
   # table output
-  output$weights_table <- renderDataTable(DT::datatable(weights_table(), style = 'bootstrap'))
+  output$weights_table <- renderDataTable({
+    feature_weights <- weights_table()
+
+    if (input$feature_type == 'Genes') {
+      feature_weights <- feature_weights %>%
+        inner_join(get_gene_external_links(feature_weights$symbol))
+    }
+    DT::datatable(feature_weights, style = 'bootstrap', escape = FALSE)
+  })
 
   # plot output
   output$weights_dist <- renderPlotly({
-    # if (is.null(weights_table())) {
-    #   return(NULL)
-    # }
     scores <- weights_table() %>%
       pull(input$score_field)
 
@@ -85,7 +90,7 @@ ui <- fluidPage(
     sidebarPanel(
       h2(sprintf("Feature Weights (%s)", config$version)),
       p(sprintf("Last Update: %s", config$last_update)),
-      selectInput("feature_type", "Feature:", choices = c('Genes', 'Pathways'), selected = 'Genes'),
+      selectInput("feature_type", "Feature:", choices = c('Genes'), selected = 'Genes'),
       selectInput("data_source",  "Source:",  choices = names(config$Genes), selected =  names(config$Genes)[1]),
       uiOutput("select_score")
     ),
