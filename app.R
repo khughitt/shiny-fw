@@ -41,6 +41,7 @@ server <- function(input, output) {
 
   # text/html output
   output$weights_name <- renderUI(h3(input$data_source))
+  output$about_html <- renderUI(HTML(paste0(readLines('html/about.html'), collapse = '\n')))
 
   # ui output
   output$select_score <- renderUI({
@@ -90,9 +91,15 @@ ui <- fluidPage(
     sidebarPanel(
       h2(sprintf("Feature Weights (%s)", config$version)),
       p(sprintf("Last Update: %s", config$last_update)),
-      selectInput("feature_type", "Feature:", choices = c('Genes'), selected = 'Genes'),
-      selectInput("data_source",  "Source:",  choices = names(config$Genes), selected =  names(config$Genes)[1]),
-      uiOutput("select_score")
+      tabsetPanel(type = "tabs",
+          tabPanel(
+            "Settings",
+            br(),
+            selectInput("feature_type", "Feature:", choices = c('Genes'), selected = 'Genes'),
+            selectInput("data_source",  "Source:",  choices = names(config$Genes), selected =  names(config$Genes)[1]),
+            uiOutput("select_score")
+          ),
+          tabPanel("About", uiOutput("about_html")))
     ),
     #
     # main panel
