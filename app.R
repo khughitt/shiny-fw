@@ -82,6 +82,8 @@ server <- function(input, output) {
 }
 
 ui <- fluidPage(
+  titlePanel(sprintf("Feature Weights (%s)", config$version), 
+             windowTitle = sprintf("Feature Weights (%s)", config$version)),
   tags$head(includeCSS("resources/styles.css")),
   theme = shinytheme("darkly"),
   sidebarLayout(
@@ -89,7 +91,6 @@ ui <- fluidPage(
     # sidebar
     #
     sidebarPanel(
-      h2(sprintf("Feature Weights (%s)", config$version)),
       p(sprintf("Last Update: %s", config$last_update)),
       tabsetPanel(type = "tabs",
           tabPanel(
